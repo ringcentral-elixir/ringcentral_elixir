@@ -1,8 +1,8 @@
 defmodule RingCentral.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
-  @url "https://github.com/linjunpop/ringcentral_elixir"
+  @version "0.2.0"
+  @url "https://github.com/ringcentral-elixir/ringcentral_elixir"
 
   def project do
     [
@@ -24,17 +24,27 @@ defmodule RingCentral.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {RingCentral.Application, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:oauth2, "~> 0.9"},
-      {:poison, "~> 4.0"},
-      {:bypass, "~> 0.8", only: :test},
-      {:ex_doc, "~> 0.14", only: [:dev, :docs]}
+      # runtime deps
+      {:finch, "~> 0.6", optional: true},
+      {:jason, "~> 1.0", optional: true},
+
+      # test
+      {:bypass, "~> 2.1", only: :test},
+
+      # doc
+      {:ex_doc, "~> 0.14", only: [:dev, :docs]},
+
+      # utils
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 
@@ -45,7 +55,7 @@ defmodule RingCentral.MixProject do
       maintainers: ["Jun Lin"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/linjunpop/ringcentral_elixir"
+        "GitHub" => "https://github.com/ringcentral-elixir/ringcentral_elixir"
       }
     ]
   end
@@ -55,9 +65,23 @@ defmodule RingCentral.MixProject do
 
   defp docs do
     [
-      main: "readme",
       extras: [
-        "README.md"
+        "docs/guide.md",
+        "docs/custom_http_client.md"
+      ],
+      groups_for_modules: [
+        "HTTP Client": [
+          ~r"RingCentral.HTTPClient"
+        ],
+        JSON: [
+          ~r"RingCentral.JSON"
+        ],
+        Authorization: [
+          ~r"RingCentral.OAuth"
+        ],
+        "REST API": [
+          ~r"RingCentral.API"
+        ]
       ]
     ]
   end
