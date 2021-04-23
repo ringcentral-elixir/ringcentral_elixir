@@ -1,5 +1,8 @@
 # RingCentral
 
+[![codebeat badge](https://codebeat.co/badges/2e46760f-58a9-4f45-84a1-547a41a8687b)](https://codebeat.co/projects/github-com-ringcentral-elixir-ringcentral_elixir-main)
+
+
 A thin [RingCentral API](https://developer.ringcentral.com/api-reference) wrapper in Elixir.
 
 ## Installation
