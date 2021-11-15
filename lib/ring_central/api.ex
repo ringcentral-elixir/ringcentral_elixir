@@ -9,6 +9,8 @@ defmodule RingCentral.API do
   which by default is the `RingCentral.HTTPClient.DefaultClient`.
   """
 
+  @default_api_prefix "/restapi/v1.0/"
+
   alias RingCentral.HTTPClient
   alias RingCentral.Response
 
@@ -96,8 +98,10 @@ defmodule RingCentral.API do
   end
 
   defp build_path(%RingCentral{} = client, path) do
+    full_path = Path.join(@default_api_prefix, path)
+
     client.server_url
-    |> URI.merge("/restapi/v1.0/" <> path)
+    |> URI.merge(full_path)
     |> URI.to_string()
   end
 end

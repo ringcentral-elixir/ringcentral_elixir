@@ -2,6 +2,8 @@
 
 ## main
 
+- Fixes potential extra slash in API request URL.
+
 ## v0.2.0
 
 ⚠️ Rewriting with breaking changes
