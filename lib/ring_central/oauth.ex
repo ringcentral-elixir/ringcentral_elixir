@@ -86,7 +86,7 @@ defmodule RingCentral.OAuth do
   # {:ok, %{"access_token": "...", "token_type": "bearer", "refresh_token": "..."}}
   ```
   """
-  @spec get_token(RingCentral.t(), map()) :: {:error, RingCentral.Error.t()} | {:ok, String.t()}
+  @spec get_token(RingCentral.t(), map()) :: {:error, RingCentral.Error.t()} | {:ok, map()}
   def get_token(%RingCentral{} = ringcentral, params \\ %{}) do
     url =
       ringcentral
