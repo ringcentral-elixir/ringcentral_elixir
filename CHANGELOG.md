@@ -2,6 +2,8 @@
 
 ## main
 
+- Fixes the `4xx` error not correctly handled in `RingCentral.OAuth.get_token/2`.
+
 ## v0.2.1
 
 - Fixes potential extra slash in API request URL.

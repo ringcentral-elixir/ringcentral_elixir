@@ -110,7 +110,7 @@ defmodule RingCentral.OAuth do
       token_info = RingCentral.JSON.decode!(ringcentral, body)
       {:ok, token_info}
     else
-      error -> handle_error(error)
+      error -> handle_error(ringcentral, error)
     end
   end
 
