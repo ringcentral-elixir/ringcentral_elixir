@@ -57,7 +57,7 @@ defmodule RingCentral.OAuth do
 
       {:ok, location}
     else
-      error -> handle_error(error)
+      error -> handle_error(ringcentral, error)
     end
   end
 
@@ -186,6 +186,22 @@ defmodule RingCentral.OAuth do
   end
 
   defp handle_error(
+         _ringcentral,
+         {:ok, %Response{status: status_code, body: "", headers: headers}}
+       )
+       when status_code >= 500 do
+    {:error,
+     %Error{
+       code: :server_error,
+       detail: %{
+         status: status_code,
+         data: nil,
+         headers: headers
+       }
+     }}
+  end
+
+  defp handle_error(
          ringcentral,
          {:ok, %Response{status: status_code, body: body, headers: headers}}
        )
@@ -203,7 +219,7 @@ defmodule RingCentral.OAuth do
      }}
   end
 
-  defp handle_error({:error, %Error{} = err}) do
+  defp handle_error(_ringcentral, {:error, %Error{} = err}) do
     {:error, err}
   end
 

@@ -2,6 +2,8 @@
 
 ## main
 
+- Fixes the OAuth 5xx error are not handled correctly.
+
 ## v0.2.2
 
 - Fixes the `4xx` error not correctly handled in `RingCentral.OAuth.get_token/2`.
