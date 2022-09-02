@@ -44,6 +44,7 @@ defmodule RingCentral.HTTPClient do
 
   See `RingCentral.HTTPClient.DefaultClient` for a reference implementation.
   """
+  require Logger
 
   alias RingCentral.Response
   alias RingCentral.Error
@@ -67,10 +68,18 @@ defmodule RingCentral.HTTPClient do
         ) :: {:ok, Response.t()} | {:error, Error.t()}
   @doc false
   def perform_request(%RingCentral{} = rc, method, url, body, headers \\ []) do
+    Logger.debug(
+      "perform request: #{method} #{url} with body: #{inspect(body)} and headers: #{inspect(headers)}"
+    )
+
     url = format_url(url)
     body = format_body(rc, body)
 
-    rc.http_client.request(method, url, body, headers)
+    result = rc.http_client.request(method, url, body, headers)
+
+    Logger.debug("response: #{inspect(result)}")
+
+    result
   end
 
   defp format_url(url) when is_struct(url, URI) do
