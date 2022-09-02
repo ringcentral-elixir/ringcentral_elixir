@@ -85,16 +85,28 @@ defmodule RingCentral.API do
 
     url = build_path(ringcentral, path)
 
-    Logger.info("Will request #{url}")
+    Logger.debug("Will request #{url}")
 
-    with {:ok, %Response{body: resp_body} = response} <-
-           HTTPClient.perform_request(ringcentral, method, url, body, headers) do
-      resp =
-        response
-        |> Map.put(:data, RingCentral.JSON.decode!(ringcentral, resp_body))
-
+    with {:ok, resp} <- HTTPClient.perform_request(ringcentral, method, url, body, headers) do
+      resp = handle_response(ringcentral, resp)
       {:ok, resp}
     end
+  end
+
+  defp handle_response(_ringcentral, %Response{body: ""} = response) do
+    resp =
+      response
+      |> Map.put(:data, nil)
+
+    resp
+  end
+
+  defp handle_response(ringcentral, %Response{body: body} = response) do
+    resp =
+      response
+      |> Map.put(:data, RingCentral.JSON.decode!(ringcentral, body))
+
+    resp
   end
 
   defp build_path(%RingCentral{} = client, path) do

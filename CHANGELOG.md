@@ -2,6 +2,7 @@
 
 ## main
 
+- Handle response with an empty body.
 - Fixes the OAuth 5xx error are not handled correctly.
 
 ## v0.2.2
